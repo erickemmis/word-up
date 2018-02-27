@@ -288,6 +288,10 @@ function isDisallowedLetter(letter) {
     // TODO 7
     // This should return true if the letter is not an element of
     // the .allowedLetters list in the model
+    if(model.allowedLetters.indexOf(letter.toLowerCase()) === -1) {
+      return true;
+    }
+
     return false;
 }
 
