@@ -247,6 +247,9 @@ $(document).ready(function() {
     // Add another event handler with a callback function.
     // When the textbox content changes,
     // update the .currentAttempt property of the model and re-render
+    $('#textbox').on('input', function(event){
+      model.currentAttempt = $(this).val();
+    });
 
 
     // when the form is submitted
