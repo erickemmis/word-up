@@ -131,6 +131,9 @@ function render() {
     // clear stuff
     $("#allowed-letters").empty();
     $("#word-submissions").empty();
+    $("#textbox").removeClass("bad-attempt");
+    $('span.disallowed-letter').remove();
+    $('#textbox').prop('disabled', false);
     // TODO 10
     // Add a few things to the above code block (underneath "// clear stuff").
 
