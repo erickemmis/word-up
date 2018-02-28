@@ -322,6 +322,9 @@ function disallowedLettersInWord(word) {
 function containsOnlyAllowedLetters(word) {
     // TODO 12
     // Return the actual answer.
+    if (disallowedLettersInWord(word).length > 0) {
+      return false;
+    }
     return true;
 }
 
