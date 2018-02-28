@@ -147,6 +147,9 @@ function render() {
 
     // TODO 11
     // Render the word submissions
+    var wordChips = model.wordSubmissions.map(wordSubmissionChip);
+    $('#word-submissions').append(wordChips);
+
 
 
     // Set the value of the textbox
