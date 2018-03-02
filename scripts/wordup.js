@@ -54,6 +54,12 @@ function addNewWordSubmission(word) {
     // TODO 21
     // replace the hardcoded 'false' with the real answer
     var alreadyUsed = false;
+    var words = model.wordSubmissions.map(sub => sub.word);
+
+    if (words.indexOf(word) > -1) {
+      alreadyUsed = true;
+    }
+
 
     // if the word is valid and hasn't already been used, add it
     if (containsOnlyAllowedLetters(word) && alreadyUsed == false) {
@@ -74,7 +80,7 @@ function checkIfWordIsReal(word) {
     // make an AJAX call to the Pearson API
     $.ajax({
         // TODO 13 what should the url be?
-        url: "www.todo13.com",
+        url: "http://api.pearson.com/v2/dictionaries/lasde/entries"+"?headword="+word,
         success: function(response) {
             console.log("We received a response from Pearson!");
 
@@ -85,10 +91,15 @@ function checkIfWordIsReal(word) {
             // Replace the 'true' below.
             // If the response contains any results, then the word is legitimate.
             // Otherwise, it is not.
-            var theAnswer = true;
+            var theAnswer = response.results.length ? true : false;
 
             // TODO 15
             // Update the corresponding wordSubmission in the model
+            model.wordSubmissions.forEach(function(sub) {
+              if (sub.word === word) {
+                sub.isRealWord = theAnswer;
+              }
+            });
 
 
             // re-render
@@ -218,15 +229,26 @@ function wordSubmissionChip(wordSubmission) {
 
     // if we know the status of this word (real word or not), then add a green score or red X
     if (wordSubmission.hasOwnProperty("isRealWord")) {
-        var scoreChip = $("<span></span>").text("⟐");
+        var scoreChip = $("<span></span>").addClass("tag tag-sm");
         // TODO 17
         // give the scoreChip appropriate text content
+        if(wordSubmission.isRealWord) {
+          scoreChip.append(wordScore(wordSubmission.word));
+          scoreChip.addClass('tag-primary');
+        } else {
+          scoreChip.append("X");
+          scoreChip.addClass('tag-danger');
+        }
+
 
         // TODO 18
         // give the scoreChip appropriate css classes
+        //DONE ^^
+
 
         // TODO 16
         // append scoreChip into wordChip
+        wordChip.append(scoreChip);
 
     }
 
@@ -356,7 +378,8 @@ function wordScore(word) {
     // TODO 19
     // Replace the empty list below.
     // Map the list of letters into a list of scores, one for each letter.
-    var letterScores = [];
+    var letterScores = letters.map(letter => scrabblePointsForEachLetter[letter]);
+
 
     // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
@@ -380,7 +403,7 @@ function currentScore() {
 
     // TODO 20
     // return the total sum of the word scores
-    return 0;
+    return wordScores.reduce(add,0);;
 }
 
 

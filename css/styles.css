@@ -26,7 +26,6 @@ main {
 .bad-attempt {
     color: #d9534f; /* Bootstrap "danger" red */
 }
-
 /* A chip to display a letter or a wordSubmission */
 .tag-lg {
     margin-right: 2%;
@@ -38,6 +37,7 @@ main {
 .tag-sm {
     font-size: 14px;
     margin-left: 0.4em;
+    vertical-align: middle;
 }
 
 .word-submission {
